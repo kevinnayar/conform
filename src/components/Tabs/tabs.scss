@@ -1,0 +1,30 @@
+.tabs {
+  &__header {
+    padding: 24px 24px 6px;
+    display: flex;
+    
+    .tab {
+      font-size: 1.2em;
+      margin-right: 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: $hover-transition;
+
+      &:hover {
+        opacity: 0.75;
+      }
+    
+      &--active {
+        color: $color-blue;
+        border-bottom: 2px solid $color-blue;
+      }
+    }
+  }
+
+  &__content {
+    border-top: 1px solid $color-grey-light;
+  }
+}
+
+

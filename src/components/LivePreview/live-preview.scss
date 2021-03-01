@@ -1,0 +1,68 @@
+.live-preview {
+  margin: 50px;
+  min-height: 480px;
+  border: 6px solid $color-grey-light;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: $hover-transition;
+  padding: 9px 0;
+
+  &--empty {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 6px dashed $color-grey-light;
+
+    h1 {
+      color: $color-grey-light;
+    }
+  }
+
+  &:hover {
+    border: 6px solid $color-blue-light;
+  }
+
+  .widget-preview {
+    padding: 12px;
+    background: $color-blue;
+    min-height: 32px;
+    margin: 9px 18px;
+    border-radius: 6px;
+    color: $color-white;
+    flex-basis: 100%;
+    width: calc(100% - 36px);
+    position: relative;
+
+    h2 {
+      display: flex;
+
+      .material-icons {
+        margin-right: 12px;
+      }
+    }
+
+    &__actions {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      display: flex;
+
+      .material-icons {
+        font-size: 1.8em;
+        margin-left: 6px;
+        cursor: pointer;
+        transition: $hover-transition;
+
+        &:hover {
+          opacity: 0.75;
+        }
+      }
+    }
+  }
+
+}
+
+
