@@ -43,17 +43,17 @@ export const WIDGET_LIST: WidgetType[] = [
   {
     type: 'button',
     name: 'Button',
-    icon: 'add_circle',
+    icon: 'next_plan',
     description: 'to take a specific action or submit.',
   },
 ];
 
 type WidgetConfigBase = {
-  type: WidgetTypeKey,
   required: boolean;
 };
 
-type WidgetConfigInput = WidgetConfigBase & {
+export type WidgetConfigInput = WidgetConfigBase & {
+  type: 'input';
   value: string;
   inputType: 'string' | 'number' | 'email' | 'url' | 'phone' | 'date' | 'time' | 'dateTime';
 };
@@ -63,22 +63,26 @@ type DropdownItem = {
   key: string,
 };
 
-type WidgetConfigDropdown = WidgetConfigBase & {
-  values: DropdownItem[],
-  allowEmpty: boolean,
+export type WidgetConfigDropdown = WidgetConfigBase & {
+  type: 'dropdown';
+  values: DropdownItem[];
+  allowEmpty: boolean;
 };
 
-type WidgetConfigRadio = WidgetConfigBase &  {
+export type WidgetConfigRadio = WidgetConfigBase & {
+  type: 'radio';
   values: string[];
 };
 
-type WidgetConfigCheckbox = WidgetConfigBase & {
+export type WidgetConfigCheckbox = WidgetConfigBase & {
+  type: 'checkbox';
   value: string;
 };
 
-type WidgetConfigButton = WidgetConfigBase & {
+export type WidgetConfigButton = WidgetConfigBase & {
+  type: 'button';
   value: string;
-  onClick: (...args: any[]) => {},
+  onClick: (...args: any[]) => {};
 };
 
 export type WidgetDef = {

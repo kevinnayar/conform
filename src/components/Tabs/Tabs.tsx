@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-function Tabs(props: { headers: string[], children: any[] }) {
+function Tabs(props: { headers: string[], children: any }) {
   if (!props.headers.length) return null;
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -20,7 +20,7 @@ function Tabs(props: { headers: string[], children: any[] }) {
         ))}
       </div>
       <div className="tabs__content">
-        {props.children[activeIndex]}
+        {props.children.length > 1 ? props.children[activeIndex] : props.children}
       </div>
     </div>
   );

@@ -18,12 +18,14 @@ function WidgetToolbarItem(props: { widget: WidgetType, onSelect: (widget: Widge
   );
 }
 
-export function WidgetToolbar(props: { widgets: WidgetType[], onSelectWidget: (widget: WidgetType) => void }) {
+function WidgetToolbar(props: { widgets: WidgetType[], onSelectWidget: (widget: WidgetType) => void }) {
   return (
     <div className="toolbar widget-toolbar">
       {props.widgets.map(w => <WidgetToolbarItem key={w.type} widget={w} onSelect={props.onSelectWidget} />)}
     </div>
   );
 }
+
+export default React.memo(WidgetToolbar);
 
 
