@@ -2,29 +2,20 @@ import * as React from 'react';
 import { useState } from 'react';
 import {
   WidgetDef,
-  WidgetConfigInput,
-  WidgetConfigDropdown,
-  WidgetConfigRadio,
-  WidgetConfigCheckbox,
-  WidgetConfigButton,
+  WidgetConfigDef,
+  WidgetConfigDefInput,
+  WidgetConfigDefDropdown,
+  WidgetConfigDefRadio,
+  WidgetConfigDefCheckbox,
+  WidgetConfigDefButton,
 } from '../../utils/widgetUtils';
 
-
-
-type WidgetConfigType = 
-  | WidgetConfigInput
-  | WidgetConfigDropdown
-  | WidgetConfigRadio
-  | WidgetConfigCheckbox
-  | WidgetConfigButton
-;
-
-type ConstrainedWidgetProps<T> = {
+type GenericWidgetProps<T> = {
   config: T,
   onUpdateWidgetConfig: (config: T) => void;
 };
 
-function WidgetConfigComponentInput(props: ConstrainedWidgetProps<WidgetConfigInput>) {
+function WidgetConfigInput(props: GenericWidgetProps<WidgetConfigDefInput>) {
   const [inputType, setInputType] = useState(props.config.inputType);
   const [required, setRequired] = useState(props.config.required);
   const [type, setType] = useState(props.config.type);
@@ -35,19 +26,36 @@ function WidgetConfigComponentInput(props: ConstrainedWidgetProps<WidgetConfigIn
       <input
         value={value}
         onChange={(e: any) => setValue(e.currentTarget.value)}
-        onBlur={() => props.onUpdateWidgetConfig({ ...props.config, value, })}
+        onBlur={() => props.onUpdateWidgetConfig({ ...props.config, value })}
       />
     </div>
-  )
+  );
 }
 
-export type WidgetConfigComponentProps = {
+function WidgetConfigDropdown(props: GenericWidgetProps<WidgetConfigDefDropdown>) {
+  const [allowEmpty, setAllowEmpty] = useState(props.config.allowEmpty);
+  const [required, setRequired] = useState(props.config.required);
+  const [type, setType] = useState(props.config.type);
+  const [values, setValues] = useState(props.config.values);
+
+  return (
+    <div className={`widget-config__item widget-config__item--${props.config.type}`}>
+      <input
+        value={values.join(', ')}
+        onChange={(e: any) => setValues( e.currentTarget.value.split(',').trim() )}
+        onBlur={() => props.onUpdateWidgetConfig({ ...props.config, values })}
+      />
+    </div>
+  );
+}
+
+export type WidgetConfigFormProps = {
   widget: WidgetDef;
   onUpdateWidget: (widget: WidgetDef) => void;
 };
 
-function WidgetConfigComponent(props: WidgetConfigComponentProps) {
-  const onUpdateWidgetConfig = (config: WidgetConfigType) => {
+function WidgetConfigForm(props: WidgetConfigFormProps) {
+  const onUpdateWidgetConfig = (config: WidgetConfigDef) => {
     props.onUpdateWidget({
       ...props.widget,
       config,
@@ -55,35 +63,44 @@ function WidgetConfigComponent(props: WidgetConfigComponentProps) {
   };
 
   if (props.widget.config.type === 'input') {
-    const config: WidgetConfigInput = props.widget.config;
-    return <WidgetConfigComponentInput config={config} onUpdateWidgetConfig={onUpdateWidgetConfig} />
+    const config: WidgetConfigDefInput = props.widget.config;
+    return <WidgetConfigInput config={config} onUpdateWidgetConfig={onUpdateWidgetConfig} />
+  }
+  if (props.widget.config.type === 'dropdown') {
+    const config: WidgetConfigDefDropdown = props.widget.config;
+    return <WidgetConfigDropdown config={config} onUpdateWidgetConfig={onUpdateWidgetConfig} />
   }
 }
 
-export type WidgetConfigProps = WidgetConfigComponentProps & {
+function WidgetConfigHeader(props: { widget: null | WidgetDef}) {
+  return (
+    <div className="widget-config__item">
+      {props.widget
+        ? (
+          <React.Fragment>
+            <h4>
+              <i className="material-icons">{props.widget.icon}</i> {props.widget.name}
+            </h4>
+            <p>{props.widget.id}</p>
+          </React.Fragment>
+        ) : (
+          <p>No widget selected.</p>
+        )
+      }
+    </div>
+  );
+}
+
+export type WidgetConfigProps = {
   widget: null | WidgetDef;
+  onUpdateWidget: (widget: WidgetDef) => void;
 };
 
 function WidgetConfig(props: WidgetConfigProps) {
-  if (!props.widget) {
-    return (
-      <div className="widget-config">
-        <div className="widget-config__item">
-          <p>No widget selected.</p>
-          </div>
-        </div>
-    );
-  }
-
   return (
     <div className="widget-config">
-      <div className={`widget-config__item widget-config__item--${props.widget.config.type}`}>
-        <h4>
-          <i className="material-icons">{props.widget.icon}</i> {props.widget.name}
-        </h4>
-        <p>{props.widget.id}</p>
-      </div>
-      <WidgetConfigComponent {...props} />
+      <WidgetConfigHeader widget={props.widget} />
+      {props.widget && <WidgetConfigForm {...props} />}
     </div>
   );
 }

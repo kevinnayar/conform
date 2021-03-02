@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { WidgetConfigInput } from '../../utils/widgetUtils';
+import { WidgetConfigDefInput } from '../../utils/widgetUtils';
 
 export type InputProps = {
   id: string;
-  config: WidgetConfigInput,
+  config: WidgetConfigDefInput,
 };
 
 function Input(props: InputProps) {

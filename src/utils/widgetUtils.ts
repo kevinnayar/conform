@@ -48,11 +48,11 @@ export const WIDGET_LIST: WidgetType[] = [
   },
 ];
 
-type WidgetConfigBase = {
+type WidgetConfigDefBase = {
   required: boolean;
 };
 
-export type WidgetConfigInput = WidgetConfigBase & {
+export type WidgetConfigDefInput = WidgetConfigDefBase & {
   type: 'input';
   value: string;
   inputType: 'string' | 'number' | 'email' | 'url' | 'phone' | 'date' | 'time' | 'dateTime';
@@ -63,45 +63,47 @@ type DropdownItem = {
   key: string,
 };
 
-export type WidgetConfigDropdown = WidgetConfigBase & {
+export type WidgetConfigDefDropdown = WidgetConfigDefBase & {
   type: 'dropdown';
   values: DropdownItem[];
   allowEmpty: boolean;
 };
 
-export type WidgetConfigRadio = WidgetConfigBase & {
+export type WidgetConfigDefRadio = WidgetConfigDefBase & {
   type: 'radio';
   values: string[];
 };
 
-export type WidgetConfigCheckbox = WidgetConfigBase & {
+export type WidgetConfigDefCheckbox = WidgetConfigDefBase & {
   type: 'checkbox';
   value: string;
 };
 
-export type WidgetConfigButton = WidgetConfigBase & {
+export type WidgetConfigDefButton = WidgetConfigDefBase & {
   type: 'button';
   value: string;
   onClick: (...args: any[]) => {};
 };
 
+export type WidgetConfigDef = 
+  | WidgetConfigDefInput
+  | WidgetConfigDefDropdown
+  | WidgetConfigDefRadio
+  | WidgetConfigDefCheckbox
+  | WidgetConfigDefButton
+;
+
 export type WidgetDef = {
   id: string;
   name: string;
   icon: string;
-  config: 
-    | WidgetConfigInput
-    | WidgetConfigDropdown
-    | WidgetConfigRadio
-    | WidgetConfigCheckbox
-    | WidgetConfigButton
-  ;
+  config: WidgetConfigDef;
 };
 
 function createInitialWidgetConfig(type: WidgetTypeKey) {
   switch(type) {
     case 'input': {
-      const config: WidgetConfigInput = {
+      const config: WidgetConfigDefInput = {
         type,
         required: false,
         value: '',
@@ -110,7 +112,7 @@ function createInitialWidgetConfig(type: WidgetTypeKey) {
       return config;
     }
     case 'dropdown': {
-      const config: WidgetConfigDropdown = {
+      const config: WidgetConfigDefDropdown = {
         type,
         required: false,
         values: [],
@@ -119,7 +121,7 @@ function createInitialWidgetConfig(type: WidgetTypeKey) {
       return config;
     }
     case 'radio': {
-      const config: WidgetConfigRadio = {
+      const config: WidgetConfigDefRadio = {
         type,
         required: false,
         values: [],
@@ -127,7 +129,7 @@ function createInitialWidgetConfig(type: WidgetTypeKey) {
       return config;
     }
     case 'checkbox': {
-      const config: WidgetConfigCheckbox = {
+      const config: WidgetConfigDefCheckbox = {
         type,
         required: false,
         value: '',
@@ -135,7 +137,7 @@ function createInitialWidgetConfig(type: WidgetTypeKey) {
       return config;
     }
     case 'button': {
-      const config: WidgetConfigButton = {
+      const config: WidgetConfigDefButton = {
         type,
         required: false,
         value: 'Submit',
