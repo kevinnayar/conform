@@ -20,31 +20,31 @@ export const WIDGET_LIST: WidgetType[] = [
     type: 'input',
     name: 'Input',
     icon: 'keyboard',
-    description: 'to collect textual information.',
+    description: 'to collect textual information',
   },
   {
     type: 'dropdown',
     name: 'Dropdown',
     icon: 'grading',
-    description: 'for selecting zero or more of many choices.',
+    description: 'for selecting zero or more of many choices',
   },
   {
     type: 'radio',
     name: 'Radio Button',
     icon: 'radio_button_checked',
-    description: 'for selecting one of many choices.',
+    description: 'for selecting one of many choices',
   },
   {
     type: 'checkbox',
     name: 'Checkbox',
     icon: 'check_box',
-    description: 'to enable or disable something.',
+    description: 'to enable or disable something',
   },
   {
     type: 'button',
     name: 'Button',
     icon: 'next_plan',
-    description: 'to take a specific action or submit.',
+    description: 'to take a specific action or submit',
   },
 ];
 

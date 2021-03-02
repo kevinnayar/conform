@@ -4,7 +4,6 @@ import BuilderSidebar from './BuilderSidebar';
 import BuilderActions from './BuilderActions';
 import Tabs from '../Tabs/Tabs';
 import WidgetToolbar from '../WidgetToolbar/WidgetToolbar';
-import SettingsToolbar from '../SettingsToolbar/SettingsToolbar';
 import LivePreview from '../LivePreview/LivePreview';
 import WidgetConfig from '../WidgetConfig/WidgetConfig';
 import { WIDGET_LIST, WidgetType, WidgetDef } from '../../utils/widgetUtils';
@@ -37,19 +36,16 @@ function Builder(props: BuilderProps) {
   };
 
   const handleDeleteWidget = (widgetId: string) => {
+    if (selectedWidget && selectedWidget.id === widgetId) setSelectedWidget(null);
     onDeleteWidget(widgetId);
-    if (selectedWidget.id === widgetId) setSelectedWidget(null);
   }
 
   return (
     <div className={`builder ${sidebarBeginCollapsed ? 'builder-sidebar-begin-visible' : ''} ${sidebarEndCollapsed ? 'builder-sidebar-end-visible' : ''}`}>
       <BuilderSidebar variant="begin" collapsed={sidebarBeginCollapsed}>
-        <div className="builder__inner">
-          <Tabs headers={['Widgets', 'Settings']}>
-            <WidgetToolbar widgets={WIDGET_LIST} onSelectWidget={(widget: WidgetType) => onCreateWidget(widget)} />
-            <SettingsToolbar settings={[{ type: 'formName', name: 'Form Name' }, { type: 'formId', name: 'Form ID' } ]} />
-          </Tabs>
-        </div>
+        <Tabs headers={['Widgets']}>
+          <WidgetToolbar widgets={WIDGET_LIST} onSelectWidget={(widget: WidgetType) => onCreateWidget(widget)} />
+        </Tabs>
       </BuilderSidebar>
 
       <div className="builder__content">
@@ -64,11 +60,9 @@ function Builder(props: BuilderProps) {
       </div>
 
       <BuilderSidebar variant="end" collapsed={sidebarEndCollapsed}>
-        <div className="builder__inner">
-          <Tabs headers={['Configuration']}>
-            <WidgetConfig widget={selectedWidget} onUpdateWidget={(widget: WidgetDef) => onUpdateWidget(widget)} />
-          </Tabs>
-        </div>
+        <Tabs headers={['Configuration']}>
+          <WidgetConfig widget={selectedWidget} onUpdateWidget={(widget: WidgetDef) => onUpdateWidget(widget)} />
+        </Tabs>
       </BuilderSidebar>
       
       <BuilderActions

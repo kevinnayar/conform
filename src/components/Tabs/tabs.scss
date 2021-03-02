@@ -1,7 +1,14 @@
 .tabs {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
+
   &__header {
     padding: 24px 24px 6px;
     display: flex;
+    position: absolute;
     
     .tab {
       font-size: 1.2em;
@@ -23,6 +30,8 @@
   }
 
   &__content {
+    overflow: auto;
+    margin-top: 66px;
     border-top: 1px solid $color-grey-light;
   }
 }

@@ -10,9 +10,6 @@
     height: 100%;
     width: 360px;
     transition: $hover-transition;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
 
     &--begin {
       border-right: 1px solid $color-grey-light;
@@ -77,9 +74,5 @@
     .builder__sidebar--end {
       margin-right: -360px;
     }
-  }
-
-  &__inner {
-    overflow: auto;
   }
 }
